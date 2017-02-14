@@ -1,0 +1,24 @@
+language: go
+go:
+- 1.7
+script:
+- go vet
+- go get
+- mkdir -p releases
+- CGO_ENABLED=0 GOOS=linux GOARCH=386 go build -ldflags "-X main.version=$TRAVIS_TAG
+  -X main.commit=$TRAVIS_COMMIT" -o release/esudp-linux-386 github.com/freman/esudp
+- CGO_ENABLED=0 GOOS=linux GOARCH=arm go build -ldflags "-X main.version=$TRAVIS_TAG
+  -X main.commit=$TRAVIS_COMMIT" -o release/esudp-linux-arm github.com/freman/esudp
+- CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-X main.version=$TRAVIS_TAG
+  -X main.commit=$TRAVIS_COMMIT" -o release/esudp-linux-amd64 github.com/freman/esudp
+deploy:
+  provider: releases
+  api_key:
+    secure: b02OU6j8C90dMP92Fs0ovPipnrft95tKJA0JSH4lsXi8FwII4b5a/qB8iNmc5XxcBdRnPBRaq4tSXXCqorKr/RNIVE2ponZ/eBdBbqPV6tlUsZva7UE4aX8eMuVLnE/jY4oe2ZAZeZ9AmiJeMmd8CtrbCEW2BIrLWRFeQBOJ1AxHbFATdYSUijw8mEznyLUI+kPFotSoN4oQaN6HPGypE1Ib3FRroLfnFbDG9QWLbn3Ohhqycd0GOrl47dba5sw3DrwcLpjz7GuZLB/QA8FE9i6Yi1EU9MpDo3oDSV8a+yD52tilbpEa2hR9g+l/owdKGVY7bLpDhV9H1vdbba3g8ant+KtPVzn9QilSaJCJyza4pbP5jFF29YmDDFrXSsuW9nnfbGFocbaG9E1ShkUzKPmIqxW2NkLXVrgwQjkIIG1gNIqKhdPiJGVui9zVAz3/cMcqlgr64Bg+TvFtKyHanE0ezAl/yc0+L1xXOdYxJasPX6aZG19l2UFCQ3Eapqb+0q7/KTX+REMRxYfug7EqgVEa4twAD9vsmxu/rELCQ290bjL4hxLmilQMJ0S6R99DKGfxLGtdzwq/5ELL1lG0kM4vEfBZqNFqiKIXm7vrvZ07af3eVyAjrzNuP4M5JNaK/zO2IUqeGtKn2ZxU84m6uA1LUbVP4bskxkRL4am1TTE=
+  file: 
+    - release/esudp-linux-386
+    - release/esudp-linux-arm
+    - release/esudp-linux-amd64
+  on:
+    repo: freman/esudp
+    tags: true

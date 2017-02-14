@@ -34,6 +34,11 @@ import (
 )
 
 var (
+	version = "Undefined"
+	commit  = "Undefined"
+)
+
+var (
 	defaultListen             = "0.0.0.0:9201"
 	defaultUpstream           = "http://127.0.0.1:9200"
 	defaultMaximumConnections = 20
@@ -53,6 +58,7 @@ func main() {
 	maximumRetries := flag.Int("maxretries", defaultMaximumRetries, "Maximum number of retries")
 	maximumUDPPacket := flag.Int("maxudp", defaultBufferSize, "Maximum size of a udp packet")
 	logSyslog := flag.String("syslog", defaultSyslog, "Log to remote syslog - eg localhost:514")
+	showVersion := flag.Bool("version", false, "Show version and exit")
 
 	debug := flag.Bool("debug", false, "Debug log level")
 
@@ -63,6 +69,12 @@ func main() {
 	}
 
 	flag.Parse()
+
+	if *showVersion {
+		fmt.Printf("esudp - %s (%s)\n", version, commit)
+		fmt.Println("https://github.com/freman/esudp")
+		return
+	}
 
 	if *debug {
 		log.SetLevel(log.DebugLevel)
