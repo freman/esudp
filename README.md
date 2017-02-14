@@ -37,11 +37,15 @@ For help with the value of dateFormat see the golang documentation - https://gol
 
 Super simple
 
-  {type}:{jsonstring}
+```
+{type}:{jsonstring}
+```
 
 Example:
 
-  redis:{"server":"1.2.3.4", "connect_duration":129, "data_transferred": 1280138}
+```
+redis:{"server":"1.2.3.4", "connect_duration":129, "data_transferred": 1280138}
+```
 
 This will create a new _redis_ record in the $prefix$dateformat index, if you wish to do any mapping of types, you should do this before you send the data for the first time.
 
@@ -49,7 +53,9 @@ This will create a new _redis_ record in the $prefix$dateformat index, if you wi
 
 Make sure you have the latest go installed, a properly configured _$GOPATH_ and are holding your tongue at the correct angle
 
-  go get -u github.com/freman/esudp
+```
+go get -u github.com/freman/esudp
+```
 
 That's really all there is, the output binary will be in _$GOPATH_/bin
 
